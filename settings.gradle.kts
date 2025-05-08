@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "isteMenu"
+rootProject.name = "istemenu"
 include(":app")

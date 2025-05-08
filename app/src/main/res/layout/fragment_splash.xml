@@ -4,10 +4,29 @@
     android:layout_height="match_parent"
     tools:context="dev.furkankavak.istemenu.fragments.SplashFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <View
+        android:id="@+id/backgroundOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="#99000000"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/logoSplash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/splash_logo"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="50dp"/>
+
+   <ImageView
+       android:id="@+id/logoTextSplash"
+       android:src="@drawable/logo_yazi"
+       android:layout_gravity="center|bottom"
+       android:layout_marginHorizontal="30dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"/>
 
 </FrameLayout>

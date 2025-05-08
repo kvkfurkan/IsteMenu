@@ -8,7 +8,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "dev.furkankavak.stemen"
+        applicationId = "dev.furkankavak.istemenu"
         minSdk = 28
         targetSdk = 35
         versionCode = 1
