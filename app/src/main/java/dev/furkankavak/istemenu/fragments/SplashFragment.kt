@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
 import androidx.navigation.fragment.findNavController
 import dev.furkankavak.istemenu.R
 import dev.furkankavak.istemenu.databinding.FragmentSplashBinding
@@ -30,7 +29,7 @@ class SplashFragment : Fragment() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
-        }, 3000) // 3 seconds delay
+        }, 3000)
     }
 
     override fun onDestroyView() {

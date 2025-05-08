@@ -49,6 +49,9 @@ dependencies {
     //Navigation
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    //Rive Animations
+    implementation(libs.rive)
+    implementation(libs.startup)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
