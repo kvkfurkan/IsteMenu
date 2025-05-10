@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import dev.furkankavak.istemenu.R
 import dev.furkankavak.istemenu.databinding.FragmentHomeBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -38,8 +36,6 @@ class HomeFragment : Fragment() {
         setupMenuData()
 
         setupRatingButtons()
-
-        setupBottomNavigation()
     }
 
     private fun setupMenuData() {
@@ -110,27 +106,6 @@ class HomeFragment : Fragment() {
             val layoutParams = binding.progressRating.layoutParams
             layoutParams.width = progressWidth
             binding.progressRating.layoutParams = layoutParams
-        }
-    }
-
-    private fun setupBottomNavigation() {
-        binding.bottomNavigation.menu.findItem(R.id.navigation_daily).isChecked = true
-
-        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.navigation_daily -> true
-                R.id.navigation_weekly -> {
-                    findNavController().navigate(R.id.weeklyFragment)
-                    true
-                }
-
-                R.id.navigation_profile -> {
-                    findNavController().navigate(R.id.profileFragment)
-                    true
-                }
-
-                else -> false
-            }
         }
     }
 

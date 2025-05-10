@@ -1,12 +1,16 @@
 package dev.furkankavak.istemenu
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -21,13 +25,43 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+
+
+        setupBottomNavigation()
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            updateBottomNavigationVisibility(destination)
+        }
     }
 
     private fun setStatusBarColor() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.pink_very_light)
-            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
-                true
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.pink_very_light)
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
+            true
+
+    }
+
+
+    private fun setupBottomNavigation() {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+
+
+        bottomNav.setupWithNavController(navController)
+    }
+
+    private fun updateBottomNavigationVisibility(destination: NavDestination) {
+        val showBottomNav = when (destination.id) {
+            R.id.loginFragment, R.id.signUpFragment, R.id.splashFragment -> false
+            else -> true
+        }
+
+        findViewById<BottomNavigationView>(R.id.bottomNavigation)?.let { bottomNav ->
+            bottomNav.visibility = if (showBottomNav) View.VISIBLE else View.GONE
+
+            if (showBottomNav) {
+                bottomNav.setupWithNavController(navController)
+            }
         }
     }
 }

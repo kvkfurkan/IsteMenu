@@ -51,10 +51,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/weeklyFragment"
-        android:name="dev.furkankavak.istemenu.fragments.WeeklyFragment"
-        android:label="Weekly"
-        tools:layout="@layout/fragment_weekly" />
+        android:id="@+id/monthlyFragment"
+        android:name="dev.furkankavak.istemenu.fragments.MonthlyFragment"
+        android:label="Monthly"
+        tools:layout="@layout/fragment_monthly" />
 
     <fragment
         android:id="@+id/profileFragment"
