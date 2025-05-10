@@ -50,4 +50,16 @@
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
+    <fragment
+        android:id="@+id/weeklyFragment"
+        android:name="dev.furkankavak.istemenu.fragments.WeeklyFragment"
+        android:label="Weekly"
+        tools:layout="@layout/fragment_weekly" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="dev.furkankavak.istemenu.fragments.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+
 </navigation>

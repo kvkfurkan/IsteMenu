@@ -6,4 +6,9 @@
     <color name="light_gray">#F8F9FA</color>
     <color name="metalic_gray">#626c80</color>
     <color name="pink">#fc678e</color>
+    <color name="pink_light">#ffb1c7</color>
+    <color name="pink_very_light">#fff0f5</color>
+    <color name="gray_light">#f5f5f5</color>
+    <color name="gray_medium">#e0e0e0</color>
+    <color name="light_black">#4C4C4C</color>
 </resources>

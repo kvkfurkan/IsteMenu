@@ -7,4 +7,6 @@
     <string name="create_account">Hesabın yok mu? Kayıt ol</string>
     <string name="pass_verifaction">Parola Onay</string>
     <string name="go_to_login">Hesabın var mı? Giriş yap</string>
+    <string name="like">Beğendim</string>
+    <string name="dislike">Beğenmedim</string>
 </resources>
