@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
 import app.rive.runtime.kotlin.core.ExperimentalAssetLoader
 import dev.furkankavak.istemenu.R
 import dev.furkankavak.istemenu.databinding.FragmentLoginBinding
@@ -57,6 +58,10 @@ class LoginFragment : Fragment() {
                         riveView.fireState(STATE_MACHINE_NAME, "fail")
                     }
                 },1150L)
+            }
+
+            tvSignup.setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
             }
         }
     }

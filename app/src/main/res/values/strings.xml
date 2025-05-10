@@ -4,4 +4,7 @@
     <string name="e_mail">E-Posta</string>
     <string name="login">Giriş Yap</string>
     <string name="password">Parola</string>
+    <string name="create_account">Hesabın yok mu? Kayıt ol</string>
+    <string name="pass_verifaction">Parola Onay</string>
+    <string name="go_to_login">Hesabın var mı? Giriş yap</string>
 </resources>
