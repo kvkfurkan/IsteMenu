@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dev.furkankavak.istemenu.databinding.FragmentHomeBinding
+import dev.furkankavak.istemenu.databinding.LayoutSkeletonHomeBinding
 import dev.furkankavak.istemenu.model.ApiResponse
 import dev.furkankavak.istemenu.model.Menu
 import dev.furkankavak.istemenu.network.RetrofitClient
@@ -22,12 +23,24 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var _skeletonBinding: LayoutSkeletonHomeBinding? = null
+    private val skeletonBinding get() = _skeletonBinding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _skeletonBinding = LayoutSkeletonHomeBinding.inflate(inflater, container, false)
+
+
+        binding.cardMenu.visibility = View.GONE
+        binding.cardRating.visibility = View.GONE
+
+
+        val rootLayout = binding.root as ViewGroup
+        rootLayout.addView(skeletonBinding.root)
+
         return binding.root
     }
 
@@ -46,35 +59,52 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchTodayMenu() {
-        RetrofitClient.apiService.getMenu().enqueue(object : Callback<ApiResponse> {
-            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    val apiResponse = response.body()!!
+        // Show skeleton loading
+        showSkeleton()
 
-                    if (apiResponse.success) {
-                        val menus = apiResponse.data.dailyMenus
-                        val todayMenu = findTodaysMenu(menus)
+        // Add a 3-second delay to be able to see the shimmer effect during development
 
-                        if (todayMenu != null) {
-                            updateUIWithMenuData(todayMenu)
+            RetrofitClient.apiService.getMenu().enqueue(object : Callback<ApiResponse> {
+                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+
+
+                    if (response.isSuccessful && response.body() != null) {
+                        val apiResponse = response.body()!!
+
+                        if (apiResponse.success) {
+                            hideSkeleton()
+
+                            val menus = apiResponse.data.dailyMenus
+                            val todayMenu = findTodaysMenu(menus)
+
+                            if (todayMenu != null && todayMenu.menu_items.isNotEmpty()) {
+                                updateUIWithMenuData(todayMenu)
+                            } else {
+                                showWeekendMessage()
+                            }
                         } else {
+                            Log.e("HomeFragment", "API error: ${apiResponse.message}")
                             showWeekendMessage()
                         }
                     } else {
-                        Log.e("HomeFragment", "API error: ${apiResponse.message}")
-                        showWeekendMessage()
+                        Log.e("HomeFragment", "Error fetching menus: ${response.message()}")
+                        Toast.makeText(context, "Menü bilgileri yüklenemedi", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                } else {
-                    Log.e("HomeFragment", "Error fetching menus: ${response.message()}")
-                    Toast.makeText(context, "Menü bilgileri yüklenemedi", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                Log.e("HomeFragment", "API call failed", t)
-                Toast.makeText(context, "Bağlantı hatası: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                    // Hide skeleton loading
+                    skeletonBinding.shimmerLayout.stopShimmer()
+                    skeletonBinding.shimmerLayout.visibility = View.GONE
+                    binding.cardMenu.visibility = View.VISIBLE
+                    binding.cardRating.visibility = View.VISIBLE
+
+                    Log.e("HomeFragment", "API call failed", t)
+                    Toast.makeText(context, "Bağlantı hatası: ${t.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
     }
 
     private fun findTodaysMenu(menus: List<Menu>): Menu? {
@@ -82,13 +112,9 @@ class HomeFragment : Fragment() {
         val apiDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val todayFormatted = apiDateFormat.format(today)
         
-        Log.e("Menuler", "$menus")
         val bugunMenu =  menus.find { menu ->
             menu.date.startsWith(todayFormatted)
         }
-        Log.e("Bugun Menusu", "$bugunMenu")
-        Log.e("bugun menu tarih", todayFormatted)
-        Log.e("Menuler", "$menus")
         return bugunMenu
     }
 
@@ -192,6 +218,20 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun showSkeleton() {
+        skeletonBinding.shimmerLayout.startShimmer()
+        skeletonBinding.shimmerLayout.visibility = View.VISIBLE
+        binding.cardMenu.visibility = View.GONE
+        binding.cardRating.visibility = View.GONE
+    }
+
+    private fun hideSkeleton(){
+        skeletonBinding.shimmerLayout.stopShimmer()
+        skeletonBinding.shimmerLayout.visibility = View.GONE
+        binding.cardMenu.visibility = View.VISIBLE
+        binding.cardRating.visibility = View.VISIBLE
+    }
+
     override fun onResume() {
         super.onResume()
         binding.customProgressBar.post {
@@ -201,6 +241,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _skeletonBinding = null
         _binding = null
     }
 }

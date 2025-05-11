@@ -119,76 +119,66 @@
                 app:layout_constraintTop_toBottomOf="@id/headerLayout" />
 
 
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
+                android:id="@+id/menuContainer"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/wavyBackground">
+                app:layout_constraintTop_toBottomOf="@id/wavyBackground"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvMainDish"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="16dp"
+                    android:text="Etli Nohut"
+                    android:textColor="@color/light_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tvSideDish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Pirinç Pilavı"
+                    android:textColor="@color/light_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvMainDish"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:text="Etli Nohut"
-                        android:textColor="@color/light_black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvSoup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Mercimek Çorbası"
+                    android:textColor="@color/light_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tvSalad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Mevsim Salatası"
+                    android:textColor="@color/light_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvSideDish"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:text="Pirinç Pilavı"
-                        android:textColor="@color/light_black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvDessert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sütlaç"
+                    android:textColor="@color/light_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-
-                    <TextView
-                        android:id="@+id/tvSoup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:text="Mercimek Çorbası"
-                        android:textColor="@color/light_black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/tvSalad"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:text="Mevsim Salatası"
-                        android:textColor="@color/light_black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/tvDessert"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sütlaç"
-                        android:textColor="@color/light_black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

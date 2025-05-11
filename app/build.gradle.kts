@@ -56,6 +56,8 @@ dependencies {
     implementation(libs.retrofit)
     //Gson
     implementation(libs.converter.gson)
+    //Shimmer
+    implementation (libs.facebook.shimmer)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
