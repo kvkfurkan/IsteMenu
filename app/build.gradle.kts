@@ -52,6 +52,10 @@ dependencies {
     //Rive Animations
     implementation(libs.rive)
     implementation(libs.startup)
+    //Retrofit
+    implementation(libs.retrofit)
+    //Gson
+    implementation(libs.converter.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

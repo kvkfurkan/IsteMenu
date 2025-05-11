@@ -1,12 +1,19 @@
 package dev.furkankavak.istemenu.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dev.furkankavak.istemenu.databinding.FragmentHomeBinding
+import dev.furkankavak.istemenu.model.ApiResponse
+import dev.furkankavak.istemenu.model.Menu
+import dev.furkankavak.istemenu.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -32,21 +39,97 @@ class HomeFragment : Fragment() {
         val formattedDate = dateFormat.format(currentDate)
 
         binding.tvDate.text = formattedDate
-
-        setupMenuData()
+        binding.tvSubtitle.text = "Bugünkü Menü"
 
         setupRatingButtons()
+        fetchTodayMenu()
     }
 
-    private fun setupMenuData() {
-        binding.tvMealDate.text = "Öğle Yemeği"
-        binding.tvMainDish.text = "Etli Nohut"
-        binding.tvSideDish.text = "Pirinç Pilavı"
-        binding.tvSoup.text = "Mercimek Çorbası"
-        binding.tvSalad.text = "Mevsim Salatası"
-        binding.tvDessert.text = "Sütlaç"
+    private fun fetchTodayMenu() {
+        RetrofitClient.apiService.getMenu().enqueue(object : Callback<ApiResponse> {
+            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val apiResponse = response.body()!!
 
-        updateLikeCounters(125, 43)
+                    if (apiResponse.success) {
+                        val menus = apiResponse.data.dailyMenus
+                        val todayMenu = findTodaysMenu(menus)
+
+                        if (todayMenu != null) {
+                            updateUIWithMenuData(todayMenu)
+                        } else {
+                            showWeekendMessage()
+                        }
+                    } else {
+                        Log.e("HomeFragment", "API error: ${apiResponse.message}")
+                        showWeekendMessage()
+                    }
+                } else {
+                    Log.e("HomeFragment", "Error fetching menus: ${response.message()}")
+                    Toast.makeText(context, "Menü bilgileri yüklenemedi", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                Log.e("HomeFragment", "API call failed", t)
+                Toast.makeText(context, "Bağlantı hatası: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun findTodaysMenu(menus: List<Menu>): Menu? {
+        val today = Calendar.getInstance().time
+        val apiDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val todayFormatted = apiDateFormat.format(today)
+        
+        Log.e("Menuler", "$menus")
+        val bugunMenu =  menus.find { menu ->
+            menu.date.startsWith(todayFormatted)
+        }
+        Log.e("Bugun Menusu", "$bugunMenu")
+        Log.e("bugun menu tarih", todayFormatted)
+        Log.e("Menuler", "$menus")
+        return bugunMenu
+    }
+
+    private fun updateUIWithMenuData(menu: Menu) {
+        val menuItems = menu.menu_items
+
+        if (menuItems.isNotEmpty()) {
+            // Update meal type
+            binding.tvMealDate.text =
+                "Öğle Yemeği" // This could be dynamic if API provided meal type
+
+            // Update menu items based on the number of items available
+            if (menuItems.size >= 1) binding.tvSoup.text = menuItems[0].name
+            if (menuItems.size >= 2) binding.tvMainDish.text = menuItems[1].name
+            if (menuItems.size >= 3) binding.tvSideDish.text = menuItems[2].name
+            if (menuItems.size >= 4) binding.tvSalad.text = menuItems[3].name
+            if (menuItems.size >= 5) binding.tvDessert.text = menuItems[4].name
+
+            // Update calories
+            binding.tvCaloriesHeader.text = "${menu.total_calories} kcal"
+
+            // Update ratings
+            updateLikeCounters(125, 43) // Hardcoded for now, could be from DB later
+        }
+    }
+
+    private fun showWeekendMessage() {
+        // Hide menu items
+        binding.tvSoup.text = "Hafta sonu yemekhane çalışmamaktadır"
+        binding.tvMainDish.text = ""
+        binding.tvSideDish.text = ""
+        binding.tvSalad.text = ""
+        binding.tvDessert.text = ""
+
+        // Update header
+        binding.tvMealDate.text = "Kapalı"
+        binding.tvCaloriesHeader.text = "0 kcal"
+
+        // Disable rating buttons
+        binding.btnLike.isEnabled = false
+        binding.btnDislike.isEnabled = false
     }
 
     private fun setupRatingButtons() {

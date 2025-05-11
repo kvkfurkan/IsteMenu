@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,32 +23,35 @@ class MainActivity : AppCompatActivity() {
 
         setStatusBarColor()
 
+        // Get the bottom navigation view
+        bottomNav = findViewById(R.id.bottomNavigation)
+
+        // Set up navigation controller
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-
+        // Set up navigation once - don't do it multiple times
         setupBottomNavigation()
 
+        // Add destination change listener
         navController.addOnDestinationChangedListener { _, destination, _ ->
             updateBottomNavigationVisibility(destination)
         }
     }
 
     private fun setStatusBarColor() {
-
         window.statusBarColor = ContextCompat.getColor(this, R.color.pink_very_light)
         WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
             true
-
     }
 
-
     private fun setupBottomNavigation() {
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
-
-
+        // Set up the bottom navigation with nav controller ONCE
         bottomNav.setupWithNavController(navController)
+
+        // Prevent double-clicking navigation items
+        bottomNav.setOnItemReselectedListener { /* Do nothing on reselect */ }
     }
 
     private fun updateBottomNavigationVisibility(destination: NavDestination) {
@@ -56,12 +60,7 @@ class MainActivity : AppCompatActivity() {
             else -> true
         }
 
-        findViewById<BottomNavigationView>(R.id.bottomNavigation)?.let { bottomNav ->
-            bottomNav.visibility = if (showBottomNav) View.VISIBLE else View.GONE
-
-            if (showBottomNav) {
-                bottomNav.setupWithNavController(navController)
-            }
-        }
+        // Only update visibility - don't reset the controller setup
+        bottomNav.visibility = if (showBottomNav) View.VISIBLE else View.GONE
     }
 }

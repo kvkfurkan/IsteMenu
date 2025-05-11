@@ -13,3 +13,21 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# API keys and secrets
+/app/src/main/res/values/api_keys.xml
+/app/src/main/java/dev/furkankavak/istemenu/constants/ApiSecrets.kt
+
+# Local configuration
+/gradle.properties
+
+# Keystore files
+*.jks
+*.keystore
+keystore.properties
+
+# Google services
+google-services.json
+
+# User data
+/app/schemas/
