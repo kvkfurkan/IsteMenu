@@ -43,6 +43,47 @@ class MonthlyMenuAdapter(
                 tvDessert.text = menuItem.dessert
                 tvLikes.text =
                     "${menuItem.likes} kişi beğendi • ${menuItem.dislikes} kişi beğenmedi"
+
+                // Progress bar oranını ayarla
+                updateLikeProgress(menuItem.likes, menuItem.dislikes)
+            }
+        }
+
+        private fun updateLikeProgress(likes: Int, dislikes: Int) {
+            val total = likes + dislikes
+            if (total > 0) {
+                val likePercentage = (likes * 100) / total
+                binding.customProgressBar.post {
+                    try {
+                        val totalWidth = binding.progressBackground.width
+                        if (totalWidth > 0) {
+                            val progressWidth = (totalWidth * likePercentage) / 100
+
+                            val layoutParams = binding.progressRating.layoutParams
+                            layoutParams.width = progressWidth
+                            binding.progressRating.layoutParams = layoutParams
+                        } else {
+                            // Eğer width 0 ise sonraki frame'de tekrar dene
+                            binding.customProgressBar.post {
+                                updateLikeProgress(likes, dislikes)
+                            }
+                        }
+                    } catch (e: Exception) {
+                        // Hata durumunda, progress bar'ı güncelleme
+                        e.printStackTrace()
+                    }
+                }
+            } else {
+                // If no reactions, set progress to 0
+                binding.customProgressBar.post {
+                    try {
+                        val layoutParams = binding.progressRating.layoutParams
+                        layoutParams.width = 0
+                        binding.progressRating.layoutParams = layoutParams
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
             }
         }
     }

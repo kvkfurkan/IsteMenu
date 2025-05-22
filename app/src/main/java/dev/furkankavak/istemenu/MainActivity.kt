@@ -9,6 +9,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dev.furkankavak.istemenu.network.RetrofitClient
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        // Initialize RetrofitClient with application context
+        RetrofitClient.init(applicationContext)
 
         bottomNav = findViewById(R.id.bottomNavigation)
 

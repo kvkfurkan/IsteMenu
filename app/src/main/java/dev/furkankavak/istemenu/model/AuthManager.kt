@@ -20,6 +20,7 @@ class AuthManager(context: Context) {
     fun clearToken(){
         with(sharedPreferences.edit()){
             remove("auth_token")
+            remove("user_email")
             apply()
         }
     }

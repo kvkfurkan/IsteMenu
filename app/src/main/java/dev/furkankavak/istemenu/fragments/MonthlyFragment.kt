@@ -89,8 +89,8 @@ class MonthlyFragment : Fragment() {
                         sideDish2 = if (menuItems.size > 2) menuItems[2].name else "",
                         dessert = if (menuItems.size > 3) menuItems[3].name else "",
                         calories = menu.total_calories,
-                        likes = 0, // We could fetch these from a database in the future
-                        dislikes = 0
+                        likes = menu.likesCount,
+                        dislikes = menu.dislikesCount
                     )
                 )
             }
