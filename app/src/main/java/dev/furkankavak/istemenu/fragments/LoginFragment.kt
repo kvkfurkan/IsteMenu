@@ -1,10 +1,6 @@
 package dev.furkankavak.istemenu.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.provider.ContactsContract.CommonDataKinds.Email
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -121,7 +117,6 @@ class LoginFragment : Fragment() {
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }
                 }else{
-                    Log.d("LoginFragmentTest", response.body().toString())
                     when (response.code()){
                         400 -> Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show()
                         else -> Toast.makeText(context, "Bilinmeyen bir hata oluştu!", Toast.LENGTH_SHORT).show()
