@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BASE_URL = "https://iste-yemekhane-production.up.railway.app"
+    private const val BASE_URL = "https://iste-yemekhane-production.up.railway.app/api/"
 
     // Create a custom Gson instance that's more forgiving with type mismatches
     private val gson: Gson = GsonBuilder()

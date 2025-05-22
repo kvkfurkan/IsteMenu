@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.converter.gson)
     //Shimmer
     implementation (libs.facebook.shimmer)
+    //Logging Interceptor
+    implementation(libs.logging.interceptor)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
