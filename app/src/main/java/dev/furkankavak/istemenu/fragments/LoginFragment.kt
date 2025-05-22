@@ -53,7 +53,7 @@ class LoginFragment : Fragment() {
                 val password = etLoginPassword.text.toString()
                 Handler(Looper.getMainLooper()).postDelayed({
                     if (email == "admin@furkankavak.dev" && password == "123456"){
-                        riveView.fireState(STATE_MACHINE_NAME, "success")
+                        //riveView.fireState(STATE_MACHINE_NAME, "success")
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }else{
                         riveView.fireState(STATE_MACHINE_NAME, "fail")

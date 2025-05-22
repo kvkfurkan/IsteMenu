@@ -61,6 +61,7 @@ class SignUpFragment : Fragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     if (password == passwordVerification){
                         riveView.fireState(STATE_MACHINE_NAME, "success")
+                        findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
                     }else{
                         riveView.fireState(STATE_MACHINE_NAME, "fail")
                     }

@@ -14,7 +14,7 @@
         android:id="@+id/clHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/pink_very_light"
+        android:background="@color/orange_very_light"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
-            android:text="10 Kasım 2023"
-            android:textColor="@color/pink"
+            android:text="10 Ağustos 2024"
+            android:textColor="@color/orange_base"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
                 android:id="@+id/headerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/pink"
+                android:background="@color/orange_base"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -173,7 +173,7 @@
                     android:id="@+id/tvDessert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sütlaç"
+                    android:text="100 gr Ekmek + 200 ml Bardak Su"
                     android:textColor="@color/light_black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -205,7 +205,7 @@
                 android:id="@+id/btnLike"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/pink"
+                android:backgroundTint="@color/orange_base"
                 android:text="Beğendim"
                 android:textColor="@color/white"
                 app:icon="@drawable/ic_thumb_up"
@@ -261,7 +261,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="125 kişi beğendi • 43 kişi beğenmedi"
+                android:text="3 kişi beğendi • 0 kişi beğenmedi"
                 android:textColor="@color/metalic_gray"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"

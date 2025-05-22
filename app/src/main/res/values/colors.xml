@@ -5,10 +5,14 @@
     <color name="gray">#E8EBEC</color>
     <color name="light_gray">#F8F9FA</color>
     <color name="metalic_gray">#626c80</color>
-    <color name="pink">#fc678e</color>
-    <color name="pink_light">#ffb1c7</color>
-    <color name="pink_very_light">#fff0f5</color>
+    <color name="orange_base">#ff8729</color>
+    <color name="orange_light">#FFAB91</color>
+    <color name="orange_very_light">#FFE0B2</color>
     <color name="gray_light">#f5f5f5</color>
     <color name="gray_medium">#e0e0e0</color>
     <color name="light_black">#4C4C4C</color>
+    <color name="orange_dark">#F4511E</color>
+    <color name="amber_orange">#FFB300</color>
+    <color name="orange">#FFA07A</color>
+    <color name="orange_very_light2">#FFD7BE</color>
 </resources>

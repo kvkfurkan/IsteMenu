@@ -12,7 +12,7 @@
         android:id="@+id/clHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/pink_very_light"
+        android:background="@color/orange_very_light"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:text="Profil"
-            android:textColor="@color/pink"
+            android:textColor="@color/orange_base"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/pink"
+                android:backgroundTint="@color/orange_base"
                 android:text="Çıkış Yap"
                 android:textColor="@color/white"
                 app:icon="@drawable/ic_logout"

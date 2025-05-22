@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dev.furkankavak.istemenu.R
@@ -26,6 +27,10 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Set the status bar color to orange_very_light
+        activity?.window?.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.orange_very_light)
 
         setupListeners()
     }
@@ -57,6 +62,12 @@ class ProfileFragment : Fragment() {
         dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         dialog.show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Reset status bar color when navigating away from this fragment
+        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
     }
 
     override fun onDestroyView() {

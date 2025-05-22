@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import dev.furkankavak.istemenu.R
 import dev.furkankavak.istemenu.databinding.FragmentHomeBinding
 import dev.furkankavak.istemenu.databinding.LayoutSkeletonHomeBinding
 import dev.furkankavak.istemenu.model.ApiResponse
@@ -47,6 +49,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        activity?.window?.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.orange_very_light)
+
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale("tr"))
         val formattedDate = dateFormat.format(currentDate)
@@ -59,11 +65,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchTodayMenu() {
-        // Show skeleton loading
+
         showSkeleton()
-
-        // Add a 3-second delay to be able to see the shimmer effect during development
-
             RetrofitClient.apiService.getMenu().enqueue(object : Callback<ApiResponse> {
                 override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
 
@@ -94,7 +97,6 @@ class HomeFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                    // Hide skeleton loading
                     skeletonBinding.shimmerLayout.stopShimmer()
                     skeletonBinding.shimmerLayout.visibility = View.GONE
                     binding.cardMenu.visibility = View.VISIBLE
@@ -112,55 +114,52 @@ class HomeFragment : Fragment() {
         val apiDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val todayFormatted = apiDateFormat.format(today)
         
-        val bugunMenu =  menus.find { menu ->
+        return menus.find { menu ->
             menu.date.startsWith(todayFormatted)
         }
-        return bugunMenu
     }
 
     private fun updateUIWithMenuData(menu: Menu) {
         val menuItems = menu.menu_items
 
         if (menuItems.isNotEmpty()) {
-            // Update meal type
             binding.tvMealDate.text =
-                "Öğle Yemeği" // This could be dynamic if API provided meal type
+                "Öğle Yemeği"
 
-            // Update menu items based on the number of items available
             if (menuItems.size >= 1) binding.tvSoup.text = menuItems[0].name
             if (menuItems.size >= 2) binding.tvMainDish.text = menuItems[1].name
             if (menuItems.size >= 3) binding.tvSideDish.text = menuItems[2].name
             if (menuItems.size >= 4) binding.tvSalad.text = menuItems[3].name
             if (menuItems.size >= 5) binding.tvDessert.text = menuItems[4].name
 
-            // Update calories
+
             binding.tvCaloriesHeader.text = "${menu.total_calories} kcal"
 
-            // Update ratings
-            updateLikeCounters(125, 43) // Hardcoded for now, could be from DB later
+
+            updateLikeCounters(3, 0)
         }
     }
 
     private fun showWeekendMessage() {
-        // Hide menu items
+
         binding.tvSoup.text = "Hafta sonu yemekhane çalışmamaktadır"
         binding.tvMainDish.text = ""
         binding.tvSideDish.text = ""
         binding.tvSalad.text = ""
         binding.tvDessert.text = ""
 
-        // Update header
+
         binding.tvMealDate.text = "Kapalı"
         binding.tvCaloriesHeader.text = "0 kcal"
 
-        // Disable rating buttons
+
         binding.btnLike.isEnabled = false
         binding.btnDislike.isEnabled = false
     }
 
     private fun setupRatingButtons() {
-        var likeCount = 125
-        var dislikeCount = 43
+        var likeCount = 3
+        var dislikeCount = 0
 
         binding.btnLike.setOnClickListener {
             likeCount++
@@ -191,8 +190,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.customProgressBar.setOnLongClickListener {
-            likeCount = 125
-            dislikeCount = 43
+            likeCount = 0
+            dislikeCount = 0
             updateLikeCounters(likeCount, dislikeCount)
 
             binding.btnLike.isEnabled = true
@@ -235,8 +234,13 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.customProgressBar.post {
-            updateLikeCounters(125, 43)
+            updateLikeCounters(3, 0)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
     }
 
     override fun onDestroyView() {

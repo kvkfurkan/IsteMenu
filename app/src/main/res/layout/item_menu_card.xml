@@ -18,7 +18,7 @@
             android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/pink"
+            android:background="@color/orange_base"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -98,6 +98,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tulumba Tatlısı"
+                android:textColor="@color/light_black"
+                android:textSize="16sp"
+                android:layout_marginBottom="6dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvBreadAndWater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="100 gr Ekmek + 200 ml Bardak Su"
                 android:textColor="@color/light_black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
