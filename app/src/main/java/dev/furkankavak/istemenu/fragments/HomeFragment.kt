@@ -2,6 +2,7 @@ package dev.furkankavak.istemenu.fragments
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 import dev.furkankavak.istemenu.R
 import dev.furkankavak.istemenu.databinding.FragmentHomeBinding
 import dev.furkankavak.istemenu.databinding.LayoutSkeletonHomeBinding
@@ -336,6 +340,11 @@ class HomeFragment : Fragment() {
                                     "Beğenmeme kaldırıldı"
                                 }
 
+                                // Show feedback dialog when a user dislikes
+                                if (currentUserReaction == "dislike" && reactionResponse.data.action == "created") {
+                                    showFeedbackDialog()
+                                }
+
                                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(
@@ -440,5 +449,58 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _skeletonBinding = null
         _binding = null
+    }
+
+    private fun showFeedbackDialog() {
+        // Inflate the dialog layout manually
+        val dialogView =
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_feedback, null)
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        // Set custom background with rounded corners
+        dialog.window?.setBackgroundDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.dialog_background
+            )
+        )
+
+        // Set dialog width and margin
+        dialog.window?.let { window ->
+            val layoutParams = window.attributes
+            layoutParams.width =
+                (resources.displayMetrics.widthPixels * 0.9).toInt() // 90% of screen width
+            window.attributes = layoutParams
+        }
+
+        // Set up button listeners
+        val btnCancel = dialogView.findViewById<MaterialButton>(R.id.btnCancel)
+        val btnSubmit = dialogView.findViewById<MaterialButton>(R.id.btnSubmit)
+        val etFeedback = dialogView.findViewById<TextInputEditText>(R.id.etFeedback)
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnSubmit.setOnClickListener {
+            val feedbackText = etFeedback.text.toString()
+
+            if (feedbackText.isNotEmpty()) {
+                Toast.makeText(requireContext(), "Yorumunuz için teşekkürler!", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireContext(), "Lütfen bir yorum yazın", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }
